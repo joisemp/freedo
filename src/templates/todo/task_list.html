@@ -1,6 +1,6 @@
 <h3>Tasks</h3> <a href="{% url 'todo:create_task' %}">Add task</a>
 <ul>
     {% for task in tasks %}
-    <li>{{task}}</li>
+    <li>{{task}} - <a href="{% url 'todo:update_task' pk=task.pk %}">Update</a></li>
     {% endfor %}
 </ul>

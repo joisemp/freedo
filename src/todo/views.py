@@ -24,4 +24,13 @@ class TaskCreateView(CreateView):
         task.created_by = self.request.user
         task.save()
         return redirect('todo:task_list')
+    
+    
+class TaskUpdateView(UpdateView):
+    model = Task
+    fields = ['name', 'done']
+    template_name = 'todo/task_create.html'
+    
+    def form_valid(self, form):
+        return redirect('todo:task_list')
 
