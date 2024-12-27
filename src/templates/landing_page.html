@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>Landing page</h1>
 {% if request.user.is_authenticated %}
 <p>Logged in as : {{request.user}}</p>
@@ -6,3 +9,4 @@
 <p>Not logged in</p>
 <a href="{% url 'core:register' %}">Register now</a> | <a href="{% url 'core:login' %}">Login</a>
 {% endif %}
+{% endblock content %}
