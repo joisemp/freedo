@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'home_page/style.css' %}">
+{% endblock style %}
+
 {% block content %}
+
+<section id="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+            </div>
+            <div class="col-12 col-lg-6 d-flex align-items-center">
+               <div>
+                <h1>
+                    When small details make a strong <span>impression</span>.
+                </h1>
+                <p>
+                    "Because the smallest details have the power to leave the strongest and most lasting impressions."
+                </p>
+                <div>
+                    <a href="#" class="btn btn-light me-2">Book now<i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    <a href="#" class="btn text-light">View booking status</a>
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
 <h1>Landing page</h1>
 {% if request.user.is_authenticated %}
 <p>Logged in as : {{request.user}}</p>
@@ -9,4 +45,3 @@
 <p>Not logged in</p>
 <a href="{% url 'core:register' %}">Register now</a> | <a href="{% url 'core:login' %}">Login</a>
 {% endif %}
-{% endblock content %}
