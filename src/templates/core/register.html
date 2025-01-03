@@ -7,13 +7,18 @@
 
 {% block content %}
 <div class="container">
-    <div class="wrap">
-        <form method="post">
-            {% csrf_token %}
-            <h3 class="mb-3">Register now</h3>
-            {{form.as_p}}
-            <button type="submit" class="btn btn-primary submit-btn">Register</button>
-        </form>
+    <div class="row">
+        <div class="col-12 col-lg-6 form-container">
+            <div class="wrap">
+                <form method="post">
+                    {% csrf_token %}
+                    <h3 class="mb-3">Regiser now</h3>
+                    {{form.as_p}}
+                    <button type="submit" class="btn submit-btn">Register</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6"></div>
     </div>
 </div>
 {% endblock %}
