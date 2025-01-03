@@ -62,6 +62,14 @@
   border: 1px solid #000000;
   border-radius: 0;
 }
+.wrap .forgot-password {
+  color: #ffff00;
+  font-weight: 500;
+  text-decoration: none;
+}
+.wrap .forgot-password:hover {
+  text-decoration: underline;
+}
 .wrap .btn {
   background-color: #ffff00;
   border: 2px solid #000000;
