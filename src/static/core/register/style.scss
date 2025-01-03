@@ -1,0 +1,22 @@
+.bg-light{
+    background-color: black !important;
+}
+form{
+    width: 400px;
+    color: #ffff;
+}
+form button{
+    background-color: #ffff00 !important;
+    border-color: #ffff00 !important;
+    border-radius: 3px !important;
+}
+.wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.submit-btn{
+    font-weight: 600;
+    color: #000000;
+}

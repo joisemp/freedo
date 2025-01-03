@@ -3,12 +3,14 @@
         <a class="navbar-brand" href="#">LuxeRide</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="fa-solid fa-bars text-light"></span>
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">LuxeRide</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="fa-solid fa-x text-light"></i>
+                </button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -25,7 +27,7 @@
                         <a class="nav-link" href="#">Our brand</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Register now</a>
+                        <a class="nav-link" href="{% url 'core:login' %}">Login<i class="fa-solid fa-right-to-bracket ms-2"></i></a>
                     </li>
                 </ul>
             </div>
