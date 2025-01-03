@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from core.forms import CustomAuthenticationForm, UserRegisterForm
 
 User = get_user_model()
@@ -38,4 +38,8 @@ class UserRegisterView(CreateView):
 class LogoutView(LogoutView):
     template_name = 'core/logout.html'
     
+    
+class ChangePasswordView(PasswordChangeView):
+    template_name = 'core/change_password.html'
+    success_url = reverse_lazy('landing_page')
     
