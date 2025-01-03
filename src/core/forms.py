@@ -19,6 +19,13 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['password'].widget.attrs.update({'class': 'form-control'})
         
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            raise forms.ValidationError(
+                "Your account is not verified. Please check your email.",
+                code='inactive',
+            )
+        
 
 class UserRegisterForm(UserCreationForm):
     class Meta:

@@ -1,8 +1,15 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views import View
 from django.views.generic import TemplateView, CreateView
 from django.contrib.auth import login
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model
+
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, 
@@ -32,12 +39,34 @@ class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'core/register.html'
     success_url = reverse_lazy('core:login')
-    
+
     def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('landing_page')
+        user = form.save(commit=False)
+        user.is_active = False 
+        user.save()
+
+        token = default_token_generator.make_token(user)
+        verification_url = self.request.build_absolute_uri(
+            reverse('core:verify_account', kwargs={'uid': user.pk, 'token': token})
+        )
+
+        subject = 'Verify Your Account'
+        message = render_to_string('core/verify_email.html', {'verification_url': verification_url, 'user': user})
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+        return redirect('core:email_sent')
     
+    
+class VerifyAccountView(View):
+    def get(self, request, uid, token):
+        user = get_object_or_404(User, pk=uid)
+        if default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return redirect('core:verified')
+        else:
+            return HttpResponse('Verification link is invalid or has expired.')
+        
 
 class LogoutView(LogoutView):
     template_name = 'core/logout.html'
