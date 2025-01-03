@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'core/login/style.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-6 form-container">
+            <div class="wrap">
+                <form method="post">
+                    {% csrf_token %}
+                    <h3 class="mb-3">Login</h3>
+                    {{form.as_p}}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="submit" class="btn submit-btn">Sign in</button>
+                    <p class="mb-0"><a class="forgot-password" href="{% url 'core:reset_password' %}">Forgot password?</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6"></div>
+    </div>
+</div>
+{% endblock %}
