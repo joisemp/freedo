@@ -29,4 +29,13 @@ class ClientUpdateView(UpdateView):
     slug_field = 'slug'
     slug_url_kwarg = 'client_slug'
     success_url = reverse_lazy('clients:client_list')
+    
+
+class ClientDeleteView(DeleteView):
+    model = Client
+    template_name = 'clients/client_confirm_delete.html'
+    context_object_name = 'client'
+    slug_field = 'slug'
+    slug_url_kwarg = 'client_slug'
+    success_url = reverse_lazy('clients:client_list')
       
