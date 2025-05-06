@@ -21,4 +21,12 @@ class ClientCreateView(CreateView):
         client.freelancer = self.request.user
         client.save()
         return super().form_valid(form)
+    
+class ClientUpdateView(UpdateView):
+    model = Client
+    template_name = 'clients/client_form.html'
+    form_class = ClientForm
+    slug_field = 'slug'
+    slug_url_kwarg = 'client_slug'
+    success_url = reverse_lazy('clients:client_list')
       
