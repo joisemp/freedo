@@ -1,9 +1,13 @@
 from django.db import models
 from django.utils.text import slugify
 from config.utils import generate_unique_slug
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Client(models.Model):
+    freelancer = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=15, blank=True)
@@ -18,4 +22,7 @@ class Client(models.Model):
             base_slug = slugify(self.name)
             self.slug = generate_unique_slug(self, base_slug)
         super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return self.name
 

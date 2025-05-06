@@ -1,9 +1,8 @@
 from django.urls import path
+from .views import ClientListView
 
 app_name = 'clients'
 
 urlpatterns = [
-    # Define your URL patterns here
-    # Example:
-    # path('some-view/', SomeView.as_view(), name='some_view'),
+    path('', ClientListView.as_view(), name='client_list'),
 ]
