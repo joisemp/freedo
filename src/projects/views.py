@@ -41,3 +41,13 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
         project.save()
         return super().form_valid(form)
 
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    template_name = 'projects/project_update_form.html'
+    form_class = ProjectForm
+    slug_field = 'slug'
+    slug_url_kwarg = 'project_slug'
+    success_url = reverse_lazy('projects:project_list')
+    login_url = reverse_lazy('core:login')
+
