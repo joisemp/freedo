@@ -10,6 +10,15 @@ class ClientListView(ListView):
     template_name = 'clients/client_list.html'
     context_object_name = 'clients'
     
+
+class ClientDetailView(DetailView):
+    model = Client
+    template_name = 'clients/client_detail.html'
+    context_object_name = 'client'
+    slug_field = 'slug'
+    slug_url_kwarg = 'client_slug'
+
+    
 class ClientCreateView(CreateView):
     model = Client
     template_name = 'clients/client_form.html'
