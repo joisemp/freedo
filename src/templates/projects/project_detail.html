@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <h4>Project Name: {{ project.name }}</h4>
+    <p>Project Description: {{ project.description }}</p>
+    <p>Project Start Date: {{ project.start_date }}</p>
+    <p>Project End Date: {{ project.end_date }}</p>
+</div>
+{% endblock content %}

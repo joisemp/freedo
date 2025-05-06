@@ -16,6 +16,18 @@ class ProjectListView(LoginRequiredMixin, ListView):
         return Project.objects.filter(freelancer=self.request.user)
     
 
+class ProjectDetailView(LoginRequiredMixin, DetailView):
+    model = Project
+    template_name = 'projects/project_detail.html'
+    slug_field = 'slug'
+    slug_url_kwarg = 'project_slug'
+    context_object_name = 'project'
+    login_url = reverse_lazy('core:login')
+
+    def get_queryset(self):
+        return Project.objects.filter(freelancer=self.request.user)
+    
+
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'projects/project_form.html'
