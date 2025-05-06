@@ -50,4 +50,19 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     slug_url_kwarg = 'project_slug'
     success_url = reverse_lazy('projects:project_list')
     login_url = reverse_lazy('core:login')
+    
+    def get_queryset(self):
+        return Project.objects.filter(freelancer=self.request.user)
+    
+    
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+    model = Project
+    template_name = 'projects/project_confirm_delete.html'
+    slug_field = 'slug'
+    slug_url_kwarg = 'project_slug'
+    success_url = reverse_lazy('projects:project_list')
+    login_url = reverse_lazy('core:login')
+
+    def get_queryset(self):
+        return Project.objects.filter(freelancer=self.request.user)
 
