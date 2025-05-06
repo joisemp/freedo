@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from . models import Task
+from projects.models import Project
+from . forms import TaskForm
+from django.urls import reverse, reverse_lazy
 
 
 class TaskListView(ListView):
@@ -11,4 +14,29 @@ class TaskListView(ListView):
     def get_queryset(self):
         project_slug = self.kwargs.get('project_slug')
         return Task.objects.filter(project__slug=project_slug).order_by('-completed', 'due_date')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["project_slug"] = self.kwargs['project_slug']
+        return context
+    
 
+class TaskCreateView(CreateView):
+    model = Task
+    template_name = 'tasks/task_form.html'
+    form_class = TaskForm
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.project = Project.objects.get(slug=self.kwargs['project_slug'])
+        task.save()
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["project_slug"] = self.kwargs['project_slug']
+        return context
+    
+    def get_success_url(self):
+        return reverse('tasks:task_list', kwargs={'project_slug':self.kwargs['project_slug']})
+    

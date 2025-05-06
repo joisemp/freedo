@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
     <h3>Task List</h3>
+    <a href="{% url 'tasks:task_create' project_slug=project_slug %}">Create task</a>
     <ul>
         {% for task in tasks %}
         <li>{{ task.title }}</li>
