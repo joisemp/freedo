@@ -1,9 +1,9 @@
 from django.urls import path
+from . views import ProjectListView
 
 app_name = 'projects'
 
 urlpatterns = [
-    # Define your URL patterns here
-    # Example:
-    # path('some-view/', SomeView.as_view(), name='some_view'),
+    path('', ProjectListView.as_view(), name='project_list'),
+    # Add other URL patterns for project detail, create, update, delete views here
 ]

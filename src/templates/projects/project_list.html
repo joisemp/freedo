@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Project List</h3>
+    <ul>
+        {% for project in projects %}
+        <li>
+            <a href="#">{{ project.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
