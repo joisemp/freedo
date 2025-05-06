@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
     <h3>Project List</h3>
+    <a href="{% url 'projects:project_create' %}">Create</a>
     <ul>
         {% for project in projects %}
         <li>
