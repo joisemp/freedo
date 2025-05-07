@@ -41,6 +41,22 @@ class TaskCreateView(CreateView):
         return reverse('tasks:task_list', kwargs={'project_slug':self.kwargs['project_slug']})
     
 
+class TaskUpdateView(UpdateView):
+    model = Task
+    template_name = 'tasks/task_update_form.html'
+    form_class = TaskForm
+    slug_field = 'slug'
+    slug_url_kwarg = 'task_slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["project_slug"] = self.kwargs['project_slug']
+        return context
+    
+    def get_success_url(self):
+        return reverse('tasks:task_list', kwargs={'project_slug':self.kwargs['project_slug']})
+    
+
 class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'tasks/task_confirm_delete.html'

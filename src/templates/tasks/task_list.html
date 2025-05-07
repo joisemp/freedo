@@ -6,7 +6,7 @@
     <a href="{% url 'tasks:task_create' project_slug=project_slug %}">Create task</a>
     <ul>
         {% for task in tasks %}
-        <li>{{ task.title }} - <a href="{% url 'tasks:task_delete' project_slug=project_slug task_slug=task.slug %}">Delete</a></li>
+        <li>{{ task.title }} - <a href="{% url 'tasks:task_delete' project_slug=project_slug task_slug=task.slug %}">Delete</a> | <a href="{% url 'tasks:task_update' project_slug=project_slug task_slug=task.slug %}">Update</a></li>
         {% endfor %}
     </ul>
 </div>
