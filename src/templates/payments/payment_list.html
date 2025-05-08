@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Payment List</h3>
+    <a href="#">Create payment</a>
+    <ul>
+        {% for payment in payments %}
+        <li>
+            <strong>{{ payment.project.title }}</strong> - ₹{{ payment.amount }} on {{ payment.date }}
+            <br>
+            <em>Method:</em> {{ payment.get_method_display }}
+            <br>
+            <em>Description:</em> {{ payment.description|default:"No description provided" }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
