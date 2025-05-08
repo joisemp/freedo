@@ -12,6 +12,8 @@
             <em>Method:</em> {{ payment.get_method_display }}
             <br>
             <em>Description:</em> {{ payment.description|default:"No description provided" }}
+            <br>
+            <a href="{% url 'payments:payment_update' project_slug=project_slug payment_slug=payment.slug %}">Update</a> |
         </li>
         {% endfor %}
     </ul>
