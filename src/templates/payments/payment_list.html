@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h3>Payment List</h3>
-    <a href="#">Create payment</a>
+    <a href="{% url 'payments:payment_create' project_slug=project_slug %}">Create payment</a>
     <ul>
         {% for payment in payments %}
         <li>
