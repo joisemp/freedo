@@ -118,9 +118,9 @@
 
   <!-- Quick Actions -->
   <div class="text-end mb-5">
-    <a href="#" class="btn btn-outline-primary me-2">+ New Project</a>
-    <a href="#" class="btn btn-outline-secondary me-2">+ New Task</a>
-    <a href="#" class="btn btn-outline-success">+ Add Payment</a>
+    <a href="{% url 'projects:project_create' %}" class="btn btn-outline-primary me-2">+ New Project</a>
+    <a href="{% url 'tasks:task_create' %}" class="btn btn-outline-secondary me-2">+ New Task</a>
+    <a href="" class="btn btn-outline-success">+ Add Payment</a>
   </div>
 </div>
 
