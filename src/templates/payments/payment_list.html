@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h3>Payment List</h3>
-    <a href="{% url 'payments:payment_create' project_slug=project_slug %}">Create payment</a>
+    <a href="{% url 'payments:payment_create' %}">Create payment</a>
     <ul>
         {% for payment in payments %}
         <li>
@@ -13,8 +13,8 @@
             <br>
             <em>Description:</em> {{ payment.description|default:"No description provided" }}
             <br>
-            <a href="{% url 'payments:payment_update' project_slug=project_slug payment_slug=payment.slug %}">Update</a> |
-            <a href="{% url 'payments:payment_delete' project_slug=project_slug payment_slug=payment.slug %}">Delete</a>
+            <a href="{% url 'payments:payment_update' payment_slug=payment.slug %}">Update</a> |
+            <a href="{% url 'payments:payment_delete' payment_slug=payment.slug %}">Delete</a>
         </li>
         {% endfor %}
     </ul>

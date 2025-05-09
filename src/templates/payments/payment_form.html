@@ -8,6 +8,6 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <a href="{% url 'payments:payment_list' project_slug=project_slug %}">Back to payment list</a>
+    <a href="{% url 'payments:payment_list' %}">Back to payment list</a>
 </div>
 {% endblock content %}
