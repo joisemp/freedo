@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Welcome -->
+  <div class="mb-4">
+    <h2>Hello, {{ user.username }} 👋</h2>
+    <p class="text-muted">Today: {{ today }}</p>
+  </div>
+
+  <!-- KPIs -->
+  <div class="row text-white mb-4">
+    <div class="col-md-4">
+      <div class="card bg-primary shadow-sm p-3">
+        <h5>Total Earnings</h5>
+        <h3>₹ {{ total_earnings }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-success shadow-sm p-3">
+        <h5>Total Projects</h5>
+        <h3>{{ project_count }}</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-warning shadow-sm p-3">
+        <h5>Clients</h5>
+        <h3>{{ client_count }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card shadow-sm p-4 mb-5">
+    <h4 class="mb-3">📊 Monthly Earnings</h4>
+    <canvas id="earningsChart"></canvas>
+  </div>
+
+  <!-- Filters -->
+  <form method="get" class="row g-3 align-items-end mb-5">
+    <div class="col-md-3">
+      <label class="form-label">Project Status</label>
+      <select name="status" class="form-select">
+        <option value="">All</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Tasks Due In (Days)</label>
+      <input type="number" name="due_in" class="form-control" placeholder="e.g. 3">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+  </form>
+
+  <div class="row">
+    <!-- Upcoming Tasks -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm p-3">
+        <h5 class="mb-3">📋 Upcoming Tasks</h5>
+        {% if upcoming_tasks %}
+          <ul class="list-group">
+            {% for task in upcoming_tasks %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ task.title }}</strong>  
+                  <small class="text-muted">({{ task.project.title }})</small>
+                </div>
+                <span class="badge bg-danger">Due: {{ task.due_date }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted">No upcoming tasks.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Ongoing Projects -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm p-3">
+        <h5 class="mb-3">📁 Ongoing Projects</h5>
+        {% if ongoing_projects %}
+          <ul class="list-group">
+            {% for p in ongoing_projects %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ p.title }}
+                <span class="badge bg-info text-dark">{{ p.status }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted">No ongoing projects.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Payments -->
+  <div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">💰 Recent Payments</h5>
+    {% if recent_payments %}
+      <ul class="list-group">
+        {% for payment in recent_payments %}
+          <li class="list-group-item d-flex justify-content-between">
+            {{ payment.project.title }} - ₹{{ payment.amount }}
+            <small class="text-muted">{{ payment.date }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted">No recent payments.</p>
+    {% endif %}
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="text-end mb-5">
+    <a href="#" class="btn btn-outline-primary me-2">+ New Project</a>
+    <a href="#" class="btn btn-outline-secondary me-2">+ New Task</a>
+    <a href="#" class="btn btn-outline-success">+ Add Payment</a>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('earningsChart').getContext('2d');
+  const earningsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: JSON.parse('{{ chart_labels|escapejs }}'),
+      datasets: [{
+        label: 'Earnings ₹',
+        data: JSON.parse('{{ chart_data|escapejs }}'),
+        backgroundColor: 'rgba(0, 123, 255, 0.6)',
+        borderColor: '#007bff',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock content %}
