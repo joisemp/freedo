@@ -14,6 +14,7 @@
             <em>Description:</em> {{ payment.description|default:"No description provided" }}
             <br>
             <a href="{% url 'payments:payment_update' project_slug=project_slug payment_slug=payment.slug %}">Update</a> |
+            <a href="{% url 'payments:payment_delete' project_slug=project_slug payment_slug=payment.slug %}">Delete</a>
         </li>
         {% endfor %}
     </ul>
