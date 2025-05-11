@@ -1,0 +1,43 @@
+@import "../../utils/navbar";
+
+#banner {
+    margin-top: 7rem;
+    .heading {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .sub-head {
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+#task-list {
+    .list-group {
+        border-radius: 0;
+        .list-group-item {
+            border-radius: 0;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #f6f6f6;
+            font-size: 16px;
+            font-weight: 500;
+
+            .dropdown {
+                .btn {
+                    font-size: 18px;
+                }
+
+                .dropdown-item {
+                    padding: 1rem;
+                    color: #494949;
+                    font-weight: 400;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
