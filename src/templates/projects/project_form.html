@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h3>Project Create</h3>
+    <form method="POST" action="{% url 'projects:project_create' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+    <a class="btn text-primary fw-semibold" href="{% url 'projects:project_list' %}">Back to Project List</a>
+</div>
+{% endblock %}

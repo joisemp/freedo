@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
+
+{% block content %}
+
+<section id="banner">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col">
+        <h2 class="heading">Hello, {{ user.first_name }} {{ user.last_name }}</h2>
+        <p class="sub-head">Let’s take a quick look at your schedule, tasks, and progress for today</p>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end">
+        <p class="d-flex align-items-center mb-0 me-2 date">{{ today }}
+        <div class="stat-icon">📆</div>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="container py-4">
+    <div class="d-flex flex-wrap border rounded p-3 text-center">
+
+      <!-- Efficiency -->
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 stat-block">
+        <div class="stat-icon mb-2 me-2">💰</div>
+        <div>
+          <h4 class="fw-semibold">₹ {{ total_earnings }}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Earnings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 stat-block">
+        <div class="stat-icon mb-2 me-2">📂</div>
+        <div>
+          <h4 class="fw-semibold">{{project_count}}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 last-block">
+        <div class="stat-icon mb-2 me-2">🏢</div>
+        <div>
+          <h4 class="fw-semibold">{{client_count}}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Clients</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="chart-section">
+  <div class="container py-4">
+    <div>
+      <h5 class="chart-title">Monthly Earnings</h5>
+      <canvas id="earningsChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="tasks-section">
+  <div class="container py-4">
+    <h5 class="mb-4 tasks-title">Current Tasks</h5>
+    {% if upcoming_tasks %}
+    <ul class="list-group">
+      {% for task in upcoming_tasks %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ task.title }}</strong>
+          <small class="text-muted">({{ task.project.title }})</small>
+        </div>
+        <div>
+          <span class="badge bg-danger me-2">Due: {{ task.due_date }}</span>
+          <span class="dropdown">
+            <a class="btn btn-sm" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'tasks:task_update' task_slug=task.slug %}" class="dropdown-item" type="button"><i class="fa-solid fa-pen-to-square me-2"></i> Update
+                  task</a></li>
+              <li>
+                {% if task.completed %}
+                (Completed)
+                <a href="{% url 'tasks:task_uncomplete' task_slug=task.slug %}" class="dropdown-item"><i class="fa-solid fa-circle-xmark me-2"></i>Mark as Uncompleted</a>
+                {% else %}
+                <a href="{% url 'tasks:task_complete' task_slug=task.slug %}" class="dropdown-item"><i class="fa-solid fa-circle-check me-2"></i>Mark as Completed</a>
+                {% endif %}
+              </li>
+              <li><a href="{% url 'tasks:task_delete' task_slug=task.slug %}" class="dropdown-item text-danger" type="button"><i class="fa-solid fa-trash me-2"></i>Delete
+                  task</a></li>
+            </ul>
+          </span>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted">No upcoming tasks found.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('earningsChart').getContext('2d');
+  const chartLabels = {{ chart_labels| safe }};
+  const chartData = {{ chart_data| safe }};
+
+  const earningsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Earnings ₹',
+        data: chartData,
+        backgroundColor: 'rgba(0, 123, 255, 0.6)',
+        borderColor: '#007bff',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock content %}

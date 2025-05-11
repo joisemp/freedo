@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <h4>Project Name: {{ project.title }}</h4>
+    <p>Project Description: {{ project.description }}</p>
+    <p>Project Start Date: {{ project.start_date }}</p>
+    <p>Project End Date: {{ project.due_date }}</p>
+
+    <a href="{% url 'tasks:task_list' project_slug=project.slug %}">View tasks</a> |
+    <a href="{% url 'payments:payment_list' project_slug=project.slug %}">View payments</a>
+</div>
+{% endblock content %}

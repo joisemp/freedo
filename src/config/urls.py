@@ -10,4 +10,5 @@ urlpatterns = [
     path('payments/', include('payments.urls', namespace='payments')),
     path('projects/', include('projects.urls', namespace='projects')),
     path('tasks/', include('tasks.urls', namespace='tasks')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
 ]
