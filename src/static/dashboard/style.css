@@ -102,4 +102,12 @@
   background-color: #f6f6f6;
   font-size: 16px;
   font-weight: 500;
+}
+#tasks-section .list-group .list-group-item .dropdown .btn {
+  font-size: 18px;
+}
+#tasks-section .list-group .list-group-item .dropdown .dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #494949;
+  font-weight: 400;
 }/*# sourceMappingURL=style.css.map */

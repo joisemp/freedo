@@ -92,7 +92,28 @@
           <strong>{{ task.title }}</strong>
           <small class="text-muted">({{ task.project.title }})</small>
         </div>
-        <span class="badge bg-danger">Due: {{ task.due_date }}</span>
+        <div>
+          <span class="badge bg-danger me-2">Due: {{ task.due_date }}</span>
+          <span class="dropdown">
+            <a class="btn btn-sm" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'tasks:task_update' task_slug=task.slug %}" class="dropdown-item" type="button"><i class="fa-solid fa-pen-to-square me-2"></i> Update
+                  task</a></li>
+              <li>
+                {% if task.completed %}
+                (Completed)
+                <a href="{% url 'tasks:task_uncomplete' task_slug=task.slug %}" class="dropdown-item"><i class="fa-solid fa-circle-xmark me-2"></i>Mark as Uncompleted</a>
+                {% else %}
+                <a href="{% url 'tasks:task_complete' task_slug=task.slug %}" class="dropdown-item"><i class="fa-solid fa-circle-check me-2"></i>Mark as Completed</a>
+                {% endif %}
+              </li>
+              <li><a href="{% url 'tasks:task_delete' task_slug=task.slug %}" class="dropdown-item text-danger" type="button"><i class="fa-solid fa-trash me-2"></i>Delete
+                  task</a></li>
+            </ul>
+          </span>
+        </div>
       </li>
       {% endfor %}
     </ul>
@@ -129,4 +150,3 @@
   });
 </script>
 {% endblock content %}
-
