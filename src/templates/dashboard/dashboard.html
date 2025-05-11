@@ -1,231 +1,109 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+{% endblock style %}
+
 {% block content %}
-<style>
-  .dashboard-container {
-    margin: 20px auto;
-    max-width: 1200px;
-    font-family: Arial, sans-serif;
-  }
 
-  .dashboard-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .dashboard-header h2 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-
-  .dashboard-header p {
-    font-size: 1rem;
-    color: #777;
-  }
-
-  .kpi-section {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-  }
-
-  .kpi-card {
-    flex: 1;
-    margin: 0 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-
-  .kpi-card h5 {
-    font-size: 1.2rem;
-    color: #555;
-  }
-
-  .kpi-card h3 {
-    font-size: 2rem;
-    color: #333;
-    margin-top: 10px;
-  }
-
-  .chart-section {
-    margin-bottom: 40px;
-  }
-
-  .chart-section h4 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 20px;
-  }
-
-  .filter-section {
-    margin-bottom: 40px;
-  }
-
-  .filter-section form {
-    display: flex;
-    gap: 20px;
-    align-items: flex-end;
-  }
-
-  .filter-section .form-control,
-  .filter-section .form-select {
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 1rem;
-  }
-
-  .filter-section button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-
-  .filter-section button:hover {
-    background-color: #0056b3;
-  }
-
-  .list-section {
-    display: flex;
-    gap: 20px;
-  }
-
-  .list-card {
-    flex: 1;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .list-card h5 {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 20px;
-  }
-
-  .list-card ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .list-card ul li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .list-card ul li:last-child {
-    border-bottom: none;
-  }
-
-  .quick-actions {
-    text-align: right;
-    margin-top: 40px;
-  }
-
-  .quick-actions a {
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-  }
-
-  .quick-actions a:hover {
-    background-color: #0056b3;
-  }
-</style>
-
-<div class="dashboard-container">
-  <div class="dashboard-header">
-    <h2>Welcome, {{ user.first_name }} {{ user.last_name }} 👋</h2>
-    <p>Today: {{ today }}</p>
-  </div>
-
-  <div class="kpi-section">
-    <div class="kpi-card">
-      <h5>Total Earnings</h5>
-      <h3>₹ {{ total_earnings }}</h3>
-    </div>
-    <div class="kpi-card">
-      <h5>Total Projects</h5>
-      <h3>{{ project_count }}</h3>
-    </div>
-    <div class="kpi-card">
-      <h5>Clients</h5>
-      <h3>{{ client_count }}</h3>
-    </div>
-  </div>
-
-  <div class="chart-section">
-    <h4>📊 Monthly Earnings</h4>
-    <canvas id="earningsChart"></canvas>
-  </div>
-
-  <div class="filter-section">
-    <form method="get" hx-get="{% url 'dashboard:filter' %}" hx-target="#filter-results" hx-swap="innerHTML">
-      <div>
-        <label for="status">Project Status</label>
-        <select name="status" id="status" class="form-select">
-          <option value="">All</option>
-          <option value="ongoing">Ongoing</option>
-          <option value="completed">Completed</option>
-        </select>
+<section id="banner">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col">
+        <h2 class="heading">Hello, {{ user.first_name }} {{ user.last_name }}</h2>
+        <p class="sub-head">Let’s take a quick look at your schedule, tasks, and progress for today</p>
       </div>
-      <div>
-        <label for="due_in">Tasks Due In (Days)</label>
-        <input type="number" name="due_in" id="due_in" class="form-control" placeholder="e.g. 3">
+      <div class="col d-flex align-items-center justify-content-end">
+        <p class="d-flex align-items-center mb-0 me-2 date">{{ today }}
+        <div class="stat-icon">📆</div>
+        </p>
       </div>
-      <button type="submit">Filter</button>
-    </form>
+    </div>
   </div>
+</section>
 
-  <div id="filter-results" class="mt-4">
-    {% include 'dashboard/partials/filter_results.html' %}
+<section id="stats">
+  <div class="container py-4">
+    <div class="d-flex flex-wrap border rounded p-3 text-center">
+
+      <!-- Efficiency -->
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 stat-block">
+        <div class="stat-icon mb-2 me-2">💰</div>
+        <div>
+          <h4 class="fw-semibold">₹ {{ total_earnings }}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Earnings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 stat-block">
+        <div class="stat-icon mb-2 me-2">📂</div>
+        <div>
+          <h4 class="fw-semibold">{{project_count}}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center justify-content-center flex-fill p-3 last-block">
+        <div class="stat-icon mb-2 me-2">🏢</div>
+        <div>
+          <h4 class="fw-semibold">{{client_count}}</h4>
+          <div class="d-flex align-items-center">
+            <div class="fs-5">
+              <a class="stat-link" href="#">Total Clients</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
 
-  <!-- Recent Payments -->
-  <div class="card shadow-sm p-3 mb-4">
-    <h5 class="mb-3">💰 Recent Payments</h5>
-    {% if recent_payments %}
-      <ul class="list-group">
-        {% for payment in recent_payments %}
-          <li class="list-group-item d-flex justify-content-between">
-            {{ payment.project.title }} - ₹{{ payment.amount }}
-            <small class="text-muted">{{ payment.date }}</small>
-          </li>
-        {% endfor %}
-      </ul>
+<section id="chart-section">
+  <div class="container py-4">
+    <div>
+      <h5 class="chart-title">Monthly Earnings</h5>
+      <canvas id="earningsChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="tasks-section">
+  <div class="container py-4">
+    <h5 class="mb-4 tasks-title">Current Tasks</h5>
+    {% if upcoming_tasks %}
+    <ul class="list-group">
+      {% for task in upcoming_tasks %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ task.title }}</strong>
+          <small class="text-muted">({{ task.project.title }})</small>
+        </div>
+        <span class="badge bg-danger">Due: {{ task.due_date }}</span>
+      </li>
+      {% endfor %}
+    </ul>
     {% else %}
-      <p class="text-muted">No recent payments.</p>
+    <p class="text-muted">No upcoming tasks found.</p>
     {% endif %}
   </div>
-
-  <div class="quick-actions">
-    <a href="{% url 'projects:project_create' %}">+ New Project</a>
-    <a href="{% url 'tasks:task_create' %}">+ New Task</a>
-    <a href="{% url 'payments:payment_create' %}">+ Add Payment</a>
-  </div>
-</div>
+</section>
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const ctx = document.getElementById('earningsChart').getContext('2d');
-  const chartLabels = {{ chart_labels|safe }};
-  const chartData = {{ chart_data|safe }};
+  const chartLabels = {{ chart_labels| safe }};
+  const chartData = {{ chart_data| safe }};
 
   const earningsChart = new Chart(ctx, {
     type: 'bar',
@@ -247,3 +125,4 @@
   });
 </script>
 {% endblock content %}
+
