@@ -1,8 +1,11 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
 from datetime import date, timedelta
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.shortcuts import render
 
 from projects.models import Project
 from tasks.models import Task
@@ -18,17 +21,22 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         # Project/task filters (can be passed via GET)
         status_filter = self.request.GET.get('status')
-        task_due_days = int(self.request.GET.get('due_in', 3))
+        try:
+            task_due_days = int(self.request.GET.get('due_in', 3))
+        except ValueError:
+            task_due_days = 3
+
+        if status_filter not in dict(Project.STATUS_CHOICES):
+            status_filter = None
 
         projects = Project.objects.filter(freelancer=user)
         if status_filter:
             projects = projects.filter(status=status_filter)
-
+        
         tasks = Task.objects.filter(
             project__freelancer=user,
-            due_date__range=[date.today(), date.today() + timedelta(days=task_due_days)],
             completed=False
-        ).order_by('due_date')[:5]
+        ).select_related('project').order_by('due_date')[:5]
 
         total_earnings = Payment.objects.filter(project__freelancer=user).aggregate(
             total=Sum('amount')
@@ -62,3 +70,31 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         })
 
         return context
+
+class DashboardFilterView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        status_filter = request.GET.get('status')
+        try:
+            task_due_days = int(request.GET.get('due_in', 3))
+        except ValueError:
+            task_due_days = 3
+
+        if status_filter not in dict(Project.STATUS_CHOICES):
+            status_filter = None
+
+        projects = Project.objects.filter(freelancer=request.user)
+        if status_filter:
+            projects = projects.filter(status=status_filter)
+
+        tasks = Task.objects.filter(
+            project__freelancer=request.user,
+            due_date__range=[date.today(), date.today() + timedelta(days=task_due_days)],
+            completed=False
+        ).order_by('due_date')[:5]
+
+        context = {
+            'ongoing_projects': projects.exclude(status='completed'),
+            'upcoming_tasks': tasks,
+        }
+
+        return render(request, 'dashboard/partials/filter_results.html', context)
