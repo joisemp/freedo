@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+.navbar {
+  background-color: #000000; /* Transparent */
+  padding: 1rem 0;
+}
+.navbar .navbar-brand {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 22px;
+  font-family: "Pacifico", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.offcanvas {
+  background-color: #000000;
+}
+.offcanvas .offcanvas-header .offcanvas-title {
+  color: #ffffff;
+}
+.offcanvas .offcanvas-body {
+  background-color: rgba(0, 0, 0, 0);
+}
+.offcanvas .offcanvas-body .nav-item .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+.offcanvas .offcanvas-body .nav-item .nav-link:hover {
+  color: #75a5ff;
+}
+
+#banner {
+  margin-top: 7rem;
+}
+#banner .heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+#banner .sub-head {
+  font-size: 16px;
+  font-weight: 400;
+}/*# sourceMappingURL=style.css.map */
