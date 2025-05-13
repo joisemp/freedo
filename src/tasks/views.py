@@ -13,6 +13,10 @@ class TaskListView(ListView):
     template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
     
+    def get_queryset(self):
+        user = self.request.user
+        return Task.objects.filter(project__freelancer=user).order_by('completed', 'due_date')
+    
 
 class TaskCreateView(CreateView):
     model = Task

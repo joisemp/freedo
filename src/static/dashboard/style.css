@@ -107,7 +107,8 @@
   font-size: 18px;
 }
 #tasks-section .list-group .list-group-item .dropdown .dropdown-item {
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   color: #494949;
   font-weight: 400;
+  font-size: 14px;
 }/*# sourceMappingURL=style.css.map */
