@@ -28,23 +28,6 @@
     </div>
 </section>
 
-<section id="head">
-    <div class="container py-4">
-        <div class="row">
-            <div class="col">
-                <form method="get" action="{% url 'tasks:task_list' %}">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search tasks..."
-                            value="{{ request.GET.q|default:'' }}">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col"></div>
-        </div>
-    </div>
-</section>
-
 <section id="task-list">
     <div class="container">
         {% if tasks %}

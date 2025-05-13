@@ -8,7 +8,7 @@
     <p>Project Start Date: {{ project.start_date }}</p>
     <p>Project End Date: {{ project.due_date }}</p>
 
-    <a href="{% url 'tasks:task_list' project_slug=project.slug %}">View tasks</a> |
-    <a href="{% url 'payments:payment_list' project_slug=project.slug %}">View payments</a>
+    <a href="{% url 'tasks:task_list' %}">View tasks</a> |
+    <a href="{% url 'payments:payment_list' %}">View payments</a>
 </div>
 {% endblock content %}
