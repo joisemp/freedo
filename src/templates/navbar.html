@@ -18,9 +18,6 @@
                         <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clients:client_list' %}">Clients</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'projects:project_list' %}">Projects</a>
                     </li>
                     <li class="nav-item">
@@ -28,6 +25,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'payments:payment_list' %}">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clients:client_list' %}">Clients</a>
                     </li>
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
