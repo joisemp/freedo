@@ -1,13 +1,27 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'forms/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
 
 {% block content %}
-<div class="container">
-    <h3>Payment Update</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <a href="{% url 'payments:payment_list' %}">Back to payment list</a>
+<div id="form-section">
+    <div class="container">
+        <a class="btn text-primary fw-semibold mb-3" href="{% url 'payments:payment_list' %}"><i
+                class="fa-solid fa-angle-left me-2"></i>Back to Payment List</a>
+        <div class="card p-3">
+            <h4 class="mb-4">Update Payment</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
 </div>
-{% endblock content %}
+{% endblock %}
