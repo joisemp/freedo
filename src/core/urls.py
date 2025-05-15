@@ -13,7 +13,7 @@ urlpatterns = [
      path('email-sent/', TemplateView.as_view(template_name='core/email_sent.html'), name='email_sent'),
      path('verified/', TemplateView.as_view(template_name='core/verified.html'), name='verified'),
      
-     path('logout/', views.LogoutView.as_view(), name='logout'),
+     path('logout/', views.CustomLogoutView.as_view(), name='logout'),
      path('change-password/', views.ChangePasswordView.as_view(), name='change_password'),
      path('reset-password/', views.ResetPasswordView.as_view(), name='reset_password'),
      path('done-password-reset/', views.DonePasswordResetView.as_view(),
