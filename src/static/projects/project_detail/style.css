@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+.navbar {
+  background-color: #000000; /* Transparent */
+  padding: 1rem 0;
+}
+.navbar .navbar-brand {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 22px;
+  font-family: "Pacifico", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.offcanvas {
+  background-color: #000000;
+}
+.offcanvas .offcanvas-header .offcanvas-title {
+  color: #ffffff;
+}
+.offcanvas .offcanvas-body {
+  background-color: rgba(0, 0, 0, 0);
+}
+.offcanvas .offcanvas-body .nav-item .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+.offcanvas .offcanvas-body .nav-item .nav-link:hover {
+  color: #75a5ff;
+}
+
+#banner {
+  margin-top: 6rem;
+}
+#banner .banner {
+  background-color: rgb(23, 111, 234);
+  background-size: cover;
+  height: 200px;
+  width: 100%;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#banner .banner .go-back {
+  top: 1rem;
+  left: 1rem;
+  position: absolute;
+  z-index: 9999;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+#banner .banner .banner-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#details .description {
+  text-align: justify;
+}
+
+#task-list .list-group {
+  border-radius: 0;
+}
+#task-list .list-group .list-group-item {
+  border-radius: 0;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #f6f6f6;
+  font-size: 16px;
+  font-weight: 500;
+}
+#task-list .list-group .list-group-item .dropdown .btn {
+  font-size: 18px;
+}
+#task-list .list-group .list-group-item .dropdown .dropdown-item {
+  padding: 1rem;
+  color: #494949;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+#payment-list tbody,
+#payment-list td,
+#payment-list tfoot,
+#payment-list th,
+#payment-list thead,
+#payment-list tr {
+  background: rgba(255, 255, 255, 0) !important;
+  white-space: nowrap;
+  padding: 1rem !important;
+}
+#payment-list tbody .text-muted,
+#payment-list td .text-muted,
+#payment-list tfoot .text-muted,
+#payment-list th .text-muted,
+#payment-list thead .text-muted,
+#payment-list tr .text-muted {
+  font-weight: 508;
+}
+#payment-list tbody .table-link a,
+#payment-list td .table-link a,
+#payment-list tfoot .table-link a,
+#payment-list th .table-link a,
+#payment-list thead .table-link a,
+#payment-list tr .table-link a {
+  text-decoration: none !important;
+  font-weight: 500;
+}
+#payment-list .description {
+  max-width: 200px;
+  overflow-x: scroll;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+#payment-list .description::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,98 @@
+@import "../../utils/navbar";
+
+#banner {
+    margin-top: 6rem;
+    .banner {
+        .go-back {
+            top: 1rem;
+            left: 1rem;
+            position: absolute;
+            z-index: 9999;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        background-color: rgb(23, 111, 234);
+        background-size: cover;
+        height: 200px;
+        width: 100%;
+        border-radius: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .banner-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+    }
+}
+
+#details{
+    .description{
+        text-align: justify;
+    }
+}
+
+#task-list {
+    .list-group {
+        border-radius: 0;
+        .list-group-item {
+            border-radius: 0;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #f6f6f6;
+            font-size: 16px;
+            font-weight: 500;
+
+            .dropdown {
+                .btn {
+                    font-size: 18px;
+                }
+
+                .dropdown-item {
+                    padding: 1rem;
+                    color: #494949;
+                    font-weight: 400;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+#payment-list {
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        background: #ffffff00 !important;
+        white-space: nowrap;
+        padding: 1rem !important;
+        .text-muted {
+            font-weight: 508;
+        }
+
+        .table-link {
+            a {
+                text-decoration: none !important;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .description {
+        max-width: 200px;
+        overflow-x: scroll;
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    }
+
+    .description::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Opera */
+    }
+}
