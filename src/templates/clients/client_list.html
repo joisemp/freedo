@@ -1,6 +1,107 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'clients/client_list/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
+
 {% block content %}
+
+<section id="banner">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+                <h2 class="heading">🏢 Clients</h2>
+                <p class="sub-head">
+                    Manage your client connections, track projects, and keep communication seamless.
+                </p>
+            </div>
+            <div class="col d-flex align-items-center justify-content-end">
+                <a href="{% url 'clients:client_create' %}" class="btn btn-dark"><i
+                        class="fa-solid fa-plus me-2"></i>Add
+                    client</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <section class="container py-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+            <!-- Client Card -->
+            {% for client in clients %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 rounded-3">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-3"
+                            style="width: 50px; height: 50px;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{client.name}}</h6>
+                            <small class="text-muted">{{client.email}}</small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{client.phone}}</small>
+                        <small>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{client.slug}}"
+                                class="text-primary text-decoration-none fw-semibold">See details<i
+                                    class="fa-solid fa-angle-right ms-2"></i></a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal{{client.slug}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h4 class="mb-3">Client Information</h4>
+                            <div class="card p-2 bg-light">
+                                <p><strong>Name:</strong> {{ client.name }}</p>
+                            <p><strong>Email:</strong> {{ client.email }}</p>
+                            <p><strong>Phone:</strong> {{ client.phone }}</p>
+                            <p><strong>Address:</strong><br> {{ client.address }}</p>
+                            </div>
+
+                            <h4 class="mt-4 mb-3">Projects</h4>
+                            {% if client.client_projects.exists %}
+                            <div>
+                                {% for project in client.client_projects.all %}
+                                <a href="{% url 'projects:project_detail' project.slug %}" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                                    <span>{{ project.title }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-muted">No projects found for this client.</p>
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            <!-- End of Client Card -->
+
+        </div>
+    </section>
+
+</section>
+
+{% endblock content %}
+
 
 <div class="container">
     <h3>Client list page</h3>
@@ -8,9 +109,9 @@
 
     <div class="mt-3">
         {% for client in clients %}
-    <li><a href="{% url 'clients:client_detail' client_slug=client.slug %}">{{client}}</a> - <a href="{% url 'clients:client_update' client_slug=client.slug %}">Update</a> | <a href="{% url 'clients:client_delete' client_slug=client.slug %}">Delete</a></li>
-    {% endfor %}
+        <li><a href="{% url 'clients:client_detail' client_slug=client.slug %}">{{client}}</a> - <a
+                href="{% url 'clients:client_update' client_slug=client.slug %}">Update</a> | <a
+                href="{% url 'clients:client_delete' client_slug=client.slug %}">Delete</a></li>
+        {% endfor %}
     </div>
 </div>
-
-{% endblock content %}

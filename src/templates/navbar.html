@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">FreeDo</a>
+        <a class="navbar-brand" href="{% url 'landing_page' %}">FreeDo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="fa-solid fa-bars text-light"></span>
@@ -18,13 +18,16 @@
                         <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clients:client_list' %}">Clients</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'projects:project_list' %}">Projects</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'tasks:task_list' %}">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'payments:payment_list' %}">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'clients:client_list' %}">Clients</a>
                     </li>
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
@@ -33,7 +36,6 @@
                             aria-expanded="false" href="#">{{request.user}}</a>
 
                         <ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'core:change_password' %}">Change password</a></li>
                             <li>
                                 <hr class="dropdown-divider">

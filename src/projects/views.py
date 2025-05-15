@@ -27,6 +27,15 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Project.objects.filter(freelancer=self.request.user)
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = self.get_object()
+        tasks = project.tasks.order_by('due_date')
+        payments = project.payments.all()
+        context['tasks'] = tasks
+        context['payments'] = payments
+        return context
+    
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project

@@ -1,6 +1,143 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'projects/project_detail/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
 
 {% block content %}
+
+<section id="banner">
+    <div class="container py-4">
+        <a class="btn btn-sm text-light position-absolute go-back fw-semibold ms-2 mt-2" href="{% url 'projects:project_list' %}"><i
+                class="fa-solid fa-angle-left me-2"></i>Go back</a>
+        <div class="banner">
+            <h3 class="banner-title">{{project.title}}</h3>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <section id="details">
+                <div class="py-4">
+                    <p class="fw-semibold">{{ project.start_date }} - {{ project.due_date }}</p>
+                    <hr>
+                    <h4>Description</h4>
+                    <p class="description">{{ project.description }}</p>
+                    <p></p>
+                </div>
+            </section>
+        </div>
+        <div class="col-6">
+            <section id="task-list">
+                <div class="py-4">
+                    <h4 class="mb-3">Tasks</h4>
+                    {% if tasks %}
+                    <ul class="list-group">
+                        {% for task in tasks %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if task.completed %}
+                                <strike>
+                                    {% endif %}
+                                    <strong>{{ task.title }}</strong>
+                                    <small class="text-muted">({{ task.project.title }})</small>
+                                    {% if task.completed %}
+                                </strike>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <span class="badge bg-danger me-2">Due: {{ task.due_date }}</span>
+                                <span class="dropdown">
+                                    <a class="btn btn-sm" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{% url 'tasks:task_update' task_slug=task.slug %}" class="dropdown-item"
+                                                type="button"><i class="fa-solid fa-pen-to-square me-2"></i> Update task
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {% if task.completed %}
+                                            <a href="{% url 'tasks:task_complete' task_slug=task.slug %}" class="dropdown-item"
+                                                type="button"><i class="fa-solid fa-check me-2"></i> Mark as incomplete</a>
+                                            {% else %}
+                                            <a href="{% url 'tasks:task_complete' task_slug=task.slug %}" class="dropdown-item"
+                                                type="button"><i class="fa-solid fa-check me-2"></i> Mark as complete</a>
+                                            {% endif %}
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'tasks:task_delete' task_slug=task.slug %}"
+                                                class="dropdown-item text-danger" type="button"><i
+                                                    class="fa-solid fa-trash me-2"></i>Delete task
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-muted">No tasks found.</p>
+                    {% endif %}
+                </div>
+            </section>
+            
+            <section id="payment-list">
+                <div class="py-4">
+                    <h4 class="mb-3">Payments</h4>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Project</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Method</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ payment.project.title }}</td>
+                                    <td>₹{{ payment.amount }}</td>
+                                    <td>{{ payment.date }}</td>
+                                    <td>{{ payment.get_method_display }}</td>
+                                    <td class="description">{{ payment.description|default:"No description provided" }}</td>
+                                    <td>
+                                        <a href="{% url 'payments:payment_update' payment_slug=payment.slug %}"
+                                            class="btn btn-sm fw-semibold me-2 text-primary">Update</a>
+                                        <a href="{% url 'payments:payment_delete' payment_slug=payment.slug %}"
+                                            class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
 <div class="container">
 
     <h4>Project Name: {{ project.title }}</h4>
@@ -8,7 +145,6 @@
     <p>Project Start Date: {{ project.start_date }}</p>
     <p>Project End Date: {{ project.due_date }}</p>
 
-    <a href="{% url 'tasks:task_list' project_slug=project.slug %}">View tasks</a> |
-    <a href="{% url 'payments:payment_list' project_slug=project.slug %}">View payments</a>
+    <a href="{% url 'tasks:task_list' %}">View tasks</a> |
+    <a href="{% url 'payments:payment_list' %}">View payments</a>
 </div>
-{% endblock content %}

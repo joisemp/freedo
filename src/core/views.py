@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import TemplateView, CreateView
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model
 
@@ -68,8 +68,12 @@ class VerifyAccountView(View):
             return HttpResponse('Verification link is invalid or has expired.')
         
 
-class LogoutView(LogoutView):
+class CustomLogoutView(LogoutView):
     template_name = 'core/logout.html'
+    
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('landing_page')
     
     
 class ChangePasswordView(PasswordChangeView):

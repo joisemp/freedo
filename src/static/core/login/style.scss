@@ -71,7 +71,7 @@
     }
 
     .forgot-password{
-        color: #ffff00;
+        color: #6597f3;
         font-weight: 500;
         text-decoration: none;
 
@@ -81,7 +81,7 @@
     }
 
     .btn {
-        background-color: #ffff00;
+        background-color: #6597f3;
         border: 2px solid #000000;
         color: #000;
         font-size: 1rem;
@@ -92,7 +92,7 @@
         transition: all 0.3s ease;
 
         &:hover {
-            background-color: darken(#ffff00, 10%);
+            background-color: darken(#00c3ff, 10%);
         }
     }
 }

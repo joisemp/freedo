@@ -1,11 +1,27 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'forms/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
 
 {% block content %}
-<div class="container">
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<div id="form-section">
+    <div class="container">
+        <a class="btn text-primary fw-semibold mb-3" href="{% url 'clients:client_list' %}"><i
+                class="fa-solid fa-angle-left me-2"></i>Back to Client List</a>
+        <div class="card p-3">
+            <h4 class="mb-4">Add Client</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
 </div>
-{% endblock content %}
+{% endblock %}

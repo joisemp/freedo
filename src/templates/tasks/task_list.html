@@ -1,6 +1,95 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'tasks/task_list/style.css' %}">
+{% endblock style %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock navbar %}
 
 {% block content %}
+
+<section id="banner">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+                <h2 class="heading">📝 Tasks</h2>
+                <p class="sub-head">
+                    Stay on top of your day — review, track, and manage all your tasks effortlessly.
+                </p>
+            </div>
+            <div class="col d-flex align-items-center justify-content-end">
+                <a href="{% url 'tasks:task_create' %}" class="btn btn-dark"><i class="fa-solid fa-plus me-2"></i>Create
+                    task</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="task-list">
+    <div class="container">
+        {% if tasks %}
+        <ul class="list-group">
+            {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    {% if task.completed %}
+                    <strike>
+                    {% endif %}
+                        <strong>{{ task.title }}</strong>
+                        <small class="text-muted">({{ task.project.title }})</small>
+                    {% if task.completed %}
+                    </strike>
+                    {% endif %}
+                </div>
+                <div>
+                    <span class="badge bg-danger me-2">Due: {{ task.due_date }}</span>
+                    <span class="dropdown">
+                        <a class="btn btn-sm" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'tasks:task_update' task_slug=task.slug %}" class="dropdown-item"
+                                    type="button"><i class="fa-solid fa-pen-to-square me-2"></i> Update task
+                                </a>
+                            </li>
+                            <li>
+                                {% if task.completed %}
+                                <a href="{% url 'tasks:task_uncomplete' task_slug=task.slug %}" class="dropdown-item"><i
+                                        class="fa-solid fa-circle-xmark me-2"></i>Mark as Uncompleted</a>
+                                {% else %}
+                                <a href="{% url 'tasks:task_complete' task_slug=task.slug %}" class="dropdown-item"><i
+                                        class="fa-solid fa-circle-check me-2"></i>Mark as Completed</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <a href="{% url 'tasks:task_delete' task_slug=task.slug %}"
+                                    class="dropdown-item text-danger" type="button"><i
+                                        class="fa-solid fa-trash me-2"></i>Delete task
+                                </a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-muted">No tasks found.</p>
+        {% endif %}
+    </div>
+</section>
+
+
+
+{% endblock content %}
+
+
+
+
 <div class="container">
     <h3>Task List</h3>
     <a href="{% url 'tasks:task_create' %}">Create task</a>
@@ -9,10 +98,10 @@
         <li>
             {{ task.title }}
             {% if task.completed %}
-                (Completed)
-                <a href="{% url 'tasks:task_uncomplete' task_slug=task.slug %}">Mark as Uncompleted</a>
+            (Completed)
+            <a href="{% url 'tasks:task_uncomplete' task_slug=task.slug %}">Mark as Uncompleted</a>
             {% else %}
-                <a href="{% url 'tasks:task_complete' task_slug=task.slug %}">Mark as Completed</a>
+            <a href="{% url 'tasks:task_complete' task_slug=task.slug %}">Mark as Completed</a>
             {% endif %}
             - <a href="{% url 'tasks:task_delete' task_slug=task.slug %}">Delete</a> |
             <a href="{% url 'tasks:task_update' task_slug=task.slug %}">Update</a>
@@ -20,4 +109,3 @@
         {% endfor %}
     </ul>
 </div>
-{% endblock %}

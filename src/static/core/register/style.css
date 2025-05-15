@@ -52,7 +52,7 @@
   border-radius: 0;
 }
 .wrap .btn {
-  background-color: #ffff00;
+  background-color: #6597f3;
   border: 2px solid #000000;
   color: #000;
   font-size: 1rem;
@@ -63,5 +63,5 @@
   transition: all 0.3s ease;
 }
 .wrap .btn:hover {
-  background-color: #cccc00;
+  background-color: #009ccc;
 }/*# sourceMappingURL=style.css.map */

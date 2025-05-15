@@ -44,57 +44,11 @@
   font-size: 16px;
   font-weight: 400;
 }
-#banner .date {
-  font-size: 14px;
-  font-weight: 600;
-  color: #474747;
-}
-#banner .stat-icon {
-  background-color: #f6f6f6;
-  padding: 12px;
-  border-radius: 50%;
-  font-size: 18px;
-}
 
-#stats .stat-icon {
-  background-color: #f6f6f6;
-  padding: 12px;
-  border-radius: 50%;
-  font-size: 42px;
-}
-#stats .stat-block {
-  border-right: 1px solid #eee;
-}
-#stats .last-block {
-  border-right: none;
-}
-#stats .stat-link {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-  margin-top: 5px;
-  display: block;
-}
-#stats .stat-link:hover {
-  text-decoration: underline;
-}
-
-#chart-section .chart-title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-#tasks-section .tasks-title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-#tasks-section .list-group {
+#task-list .list-group {
   border-radius: 0;
 }
-#tasks-section .list-group .list-group-item {
+#task-list .list-group .list-group-item {
   border-radius: 0;
   border: 1px solid #eee;
   margin-bottom: 10px;
@@ -103,10 +57,10 @@
   font-size: 16px;
   font-weight: 500;
 }
-#tasks-section .list-group .list-group-item .dropdown .btn {
+#task-list .list-group .list-group-item .dropdown .btn {
   font-size: 18px;
 }
-#tasks-section .list-group .list-group-item .dropdown .dropdown-item {
+#task-list .list-group .list-group-item .dropdown .dropdown-item {
   padding: 1rem;
   color: #494949;
   font-weight: 400;
